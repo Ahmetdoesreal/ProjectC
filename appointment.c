@@ -27,22 +27,18 @@ Start Project 15 May 02:25
 							"\tLine:%d\n\n",__LINE__)
 #define name (64+1)
 #define maxOffice 5
-#define flag int
-#define true 1
-#define false 0
 
 struct TeacherInfo
 {
 	char Name[name];
 	struct
 	{
-		int id,start, end;
+		int start, end;
 		enum { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }day;
-		flag taken;
+		enum{DNE,Taken,NotTaken}status;
 		char takenby[name];
 	}ID[maxOffice];
 };
-
 //int main(void) {
 //
 //	char Selection = 0;
@@ -95,35 +91,33 @@ struct TeacherInfo
 //}
 int main(void) {
 	struct TeacherInfo x;
-	strcpy(x.Name, "Ahmet Deniz Sezgin");
-	x.ID[0].id = 1;
-	x.ID[0].day = Monday;
-	x.ID[0].start = 13;
-	x.ID[0].end = 14;
-	x.ID[0].taken =false;
-	x.ID[1].id = 2;
-	x.ID[1].day=Friday;
-	x.ID[1].start=17;
-	x.ID[1].end=18;
-	x.ID[1].taken = true
-	strcpy(x.ID[1].takenby,"small mahmut");
+	x.ID[2].status=DNE;
+	x.ID[3].status=DNE;
+	x.ID[4].status=DNE;
+	strcpy(x.Name,"Deniz Sezgin");
+	x.ID[0].status=NotTaken;
+	x.ID[0].day=Tuesday;
+	x.ID[0].start=13;
+	x.ID[0].end=14;
+	x.ID[1].status=Taken;
+	x.ID[1].day=Wednesday;
+	x.ID[1].start=20;
+	x.ID[1].end=22;
+	strcpy(x.ID[1].takenby,"Ahmet Deniz");
 	FILE* fp,*fp2;
 	char filename[name + 3];
 	strcpy(filename, x.Name);
 	strcat(filename, ".dat");
-	if ((fp = fopen(filename, "wb+")) != NULL) {
-		printf("createfile succ");
+	if ((fp = fopen(filename, "wb+")) != NULL)
 		fwrite(&x, sizeof(x), 1, fp);
-	}
 	else
-		printf("no");
+		fprintf(stderr,"no");
+	fclose(fp);
 	struct TeacherInfo patates;
-	if ((fp2 = fopen("akiki.dat", "rb+")) != NULL) {
-		printf("readfile succ");
+	if ((fp2 = fopen(filename, "rb+")) != NULL)
 		fread(&patates, sizeof(x), 1, fp2);
-	}
 	else
-		printf("sad");
-	printf("%s\n%d\n%d", patates.Name, patates.ID[0].id, patates.ID[0].taken);
-	
+		fprintf(stderr,"sad");
+	printf("\n");
+	print_office_hour(x.Name);
 }

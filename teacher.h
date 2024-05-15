@@ -3,5 +3,5 @@
 
 void insert_office_hour(void);
 void update_office_hour(void);
-void print_office_hour(void);
+void print_office_hour(char*);
 #endif 

@@ -5,7 +5,7 @@
             "name": "C++ Launch (GDB)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/appointment",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
