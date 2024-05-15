@@ -39,61 +39,61 @@ struct TeacherInfo
 		char takenby[name];
 	}ID[maxOffice];
 };
-//int main(void) {
-//
-//	char Selection = 0;
-//	char input[name]="";
-//	ProjectInfo;
-//	printf("**************************************************\n* WELCOME TO THE OFFICE HOUR APPOINTMENT SYSTEM  *\n**************************************************\nWho are you? (Enter 1 for TEACHER, 2 for STUDENT):");
-//	read_line(&Selection, 1);
-//	if (Selection=='1') {
-//		printf("Enter your full name:");
-//		read_line(input,name);
-//		printf("welcome %s", input);
-//		do{
-//			printf("\nselect operation Insert,Update,Print,Quit");
-//			read_line(&Selection, 1);
-//			switch (Selection)
-//			{
-//			case 'i':case 'I':
-//				insert_office_hour();
-//				break;
-//			case 'u':case 'U':
-//				update_office_hour();
-//				break;
-//			case 'p':case'P':
-//				print_office_hour();
-//				break;
-//			case 'q':case 'Q':case'\n':
-//				break;
-//			default:
-//				fprintf(stderr, "\a\nPlease select a supported action\n[i,I]\tInsert\n[u,U]\tUpdate\n[p,P]\tPrint\n[q,Q]\tQuit");
-//				break;
-//			}
-//		} while (Selection != 'q' && Selection != 'Q');
-//	}
-//	else if (Selection == '2') {
-//		printf("Enter your full name:");
-//		read_line(input, name);
-//		printf("welcome %s", input);
-//		do{
-//			char teach[name] = "";
-//			printf("Enter Teacher name:");
-//			read_line(teach, name);
-//			Selection = teach[0];
-//			if(teach[0]!='q'&&teach[0]!='Q')
-//			create_appointment(input,teach);
-//		} while (Selection != 'q' && Selection != 'Q');
-//	}
-//	else {
-//		fprintf(stderr, "Please enter 1 or 2\a");
-//	}
-//}
+int main(void) {
+
+	char Selection = 0;
+	char input[name]="";
+	ProjectInfo;
+	printf("**************************************************\n* WELCOME TO THE OFFICE HOUR APPOINTMENT SYSTEM  *\n**************************************************\nWho are you? (Enter 1 for TEACHER, 2 for STUDENT):");
+	read_line(&Selection, 1);
+	if (Selection=='1') {
+		printf("Enter your full name:");
+		read_line(input,name);
+		printf("welcome %s", input);
+		do{
+			printf("\nselect operation Insert,Update,Print,Quit");
+			read_line(&Selection, 1);
+			switch (Selection)
+			{
+			case 'i':case 'I':
+				insert_office_hour();
+				break;
+			case 'u':case 'U':
+				update_office_hour();
+				break;
+			case 'p':case'P':
+				print_office_hour(input);
+				break;
+			case 'q':case 'Q':case'\n':
+				break;
+			default:
+				fprintf(stderr, "\a\nPlease select a supported action\n[i,I]\tInsert\n[u,U]\tUpdate\n[p,P]\tPrint\n[q,Q]\tQuit");
+				break;
+			}
+		} while (Selection != 'q' && Selection != 'Q');
+	}
+	else if (Selection == '2') {
+		printf("Enter your full name:");
+		read_line(input, name);
+		printf("welcome %s", input);
+		do{
+			char teach[name] = "";
+			printf("Enter Teacher name:");
+			read_line(teach, name);
+			Selection = teach[0];
+			if(teach[0]!='q'&&teach[0]!='Q')
+			create_appointment(input,teach);
+		} while (Selection != 'q' && Selection != 'Q');
+	}
+	else {
+		fprintf(stderr, "Please enter 1 or 2\a");
+	}
+}/*
 int main(void) {
 	struct TeacherInfo x;
-	x.ID[2].status=DNE;
-	x.ID[3].status=DNE;
-	x.ID[4].status=DNE;
+	x.ID[2].status=NotTaken;
+	x.ID[3].status=Taken;
+	x.ID[4].status=NotTaken;
 	strcpy(x.Name,"Deniz Sezgin");
 	x.ID[0].status=NotTaken;
 	x.ID[0].day=Tuesday;
@@ -104,15 +104,29 @@ int main(void) {
 	x.ID[1].start=20;
 	x.ID[1].end=22;
 	strcpy(x.ID[1].takenby,"Ahmet Deniz");
+	x.ID[2].day = Monday;
+	x.ID[2].start = 11;
+	x.ID[2].end = 12;
+	strcpy(x.ID[2].takenby, "Ahmet Sezgin");
+	x.ID[3].day = Sunday;
+	x.ID[3].start = 0;
+	x.ID[3].end = 23;
+	strcpy(x.ID[3].takenby, "student name");
+	x.ID[4].day = Saturday;
+	x.ID[4].start = 0;
+	x.ID[4].end = 12;
+	strcpy(x.ID[4].takenby, "amerikanvari patates salatasi");
 	FILE* fp,*fp2;
 	char filename[name + 3];
 	strcpy(filename, x.Name);
 	strcat(filename, ".dat");
-	if ((fp = fopen(filename, "wb+")) != NULL)
+	if ((fp = fopen(filename, "wb+")) != NULL){
 		fwrite(&x, sizeof(x), 1, fp);
+		fclose(fp);
+	}
 	else
 		fprintf(stderr,"no");
-	fclose(fp);
+
 	struct TeacherInfo patates;
 	if ((fp2 = fopen(filename, "rb+")) != NULL)
 		fread(&patates, sizeof(x), 1, fp2);
@@ -120,4 +134,4 @@ int main(void) {
 		fprintf(stderr,"sad");
 	printf("\n");
 	print_office_hour(x.Name);
-}
+}*/

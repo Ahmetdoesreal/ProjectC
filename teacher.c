@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include "teacher.h"
@@ -31,8 +32,7 @@ void update_office_hour(void) {
 void print_office_hour(char *tName) {
 	FILE *file;
 	char filename[name+4]="";
-	printf("print selected\n");
-	strcpy(filename,"Deniz Sezgin");
+	strcpy(filename, tName);
 	strcat(filename,".dat");
 	if(NULL==(file=fopen(filename,"rb+")))
 		fprintf(stderr,"An Error Occured While Opening File\nFunciton:Print Office Hour" __FILE__);
@@ -63,7 +63,7 @@ void print_office_hour(char *tName) {
 					printf("Friday\t");
 					break;
 					case 5:
-					printf("Saturday\t");
+					printf("Saturday");
 					break;
 					case 6:
 					printf("Sunday\t");

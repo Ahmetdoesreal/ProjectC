@@ -1,3 +1,11 @@
 
 appointment
 *.o
+*.ipch
+*.opendb
+*.db-wal
+*.vsidx
+*.db
+*.db-shm
+.vs/Proje/v17/.suo
+/x64
