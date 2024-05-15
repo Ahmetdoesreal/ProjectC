@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "__bit_reference": "c",
+        "bitset": "c",
+        "unordered_map": "c",
+        "algorithm": "c",
+        "format": "c",
+        "stdio.h": "c",
+        "string.h": "c",
+        "cstdlib": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/deniz/Documents/Visual Studio/kanepeninKosesindeBekliyorum",
+            "binaryPath": "/Users/deniz/Documents/Visual Studio/kanepeninKosesindeBekliyorum/calc",
+            "binaryArgs": []
+        }
+    ]
+}
