@@ -125,4 +125,5 @@ int main(void) {
 	else
 		printf("sad");
 	printf("%s\n%d\n%d", patates.Name, patates.ID[0].id, patates.ID[0].taken);
+	
 }
