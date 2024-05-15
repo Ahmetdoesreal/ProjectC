@@ -39,6 +39,7 @@ struct TeacherInfo
 		int id,start, end;
 		enum { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }day;
 		flag taken;
+		char takenby[name];
 	}ID[maxOffice];
 };
 
@@ -100,6 +101,12 @@ int main(void) {
 	x.ID[0].start = 13;
 	x.ID[0].end = 14;
 	x.ID[0].taken =false;
+	x.ID[1].id = 2;
+	x.ID[1].day=Friday;
+	x.ID[1].start=17;
+	x.ID[1].end=18;
+	x.ID[1].taken = true
+	strcpy(x.ID[1].takenby,"small mahmut");
 	FILE* fp,*fp2;
 	char filename[name + 3];
 	strcpy(filename, x.Name);
