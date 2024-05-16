@@ -25,8 +25,4 @@ void read_line(char* stringin,int maxnum) {
 		input = getchar();
 	}
 	return;
-	//for (int i = 0; i < maxnum; i++)
-	//{
-	//	printf("%c\t%d\t%d\n", stringin[i], stringin[i], i + 1);
-	//}
 }

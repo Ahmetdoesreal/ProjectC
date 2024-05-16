@@ -22,7 +22,7 @@ FILE *file;
 void store_office_hour(void){
 	rewind(file);
 	fwrite(&info, sizeof(info), 1, file);
-fclose(file);
+	fclose(file);
 }
 void insert_office_hour(char* tName) {
 	int idInput = -1,hourInput=-1;
@@ -36,7 +36,7 @@ void insert_office_hour(char* tName) {
 	else {
 		fread(&info, sizeof(info), 1, file);
 		printf("\tEnter identification number: ");
-		(void)scanf("%d", &idInput);
+		scanf("%d", &idInput);
 		if (!(0<=idInput&&idInput < maxOffice))
 			fprintf(stderr, "Can't add more office hours!\nConsider Updating existing hours");
 		else
@@ -85,7 +85,7 @@ void insert_office_hour(char* tName) {
 				}
 			FailedStartHour:
 				printf("Enter starting hour: ");
-				(void)scanf("%d", &hourInput);
+				scanf("%d", &hourInput);
 				read_line(inputInfo, 4);
 				if (!(0 <= hourInput && hourInput <= 12)) {
 					fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
@@ -95,9 +95,11 @@ void insert_office_hour(char* tName) {
 				{
 				case 'a':case 'A':
 					info.ID[idInput].start = hourInput % 12;
+					//printf("set start hour to %d a.m [%d]", hourInput, info.ID[idInput].start);
 					break;
 				case 'p':case 'P':
 					info.ID[idInput].start = hourInput % 12 + 12;
+					//printf("set start hour to %d p.m [%d]", hourInput, info.ID[idInput].start);
 				default:
 					fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
 					goto FailedStartHour;
@@ -105,7 +107,7 @@ void insert_office_hour(char* tName) {
 				}
 			FailedEndHour:
 				printf("Enter ending hour: ");
-				(void)scanf("%d", &hourInput);
+				scanf("%d", &hourInput);
 				read_line(inputInfo, 4);
 				if (!(0 <= hourInput && hourInput <= 12)) {
 					fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
@@ -114,10 +116,13 @@ void insert_office_hour(char* tName) {
 				switch (inputInfo[0])
 				{
 				case 'a':case 'A':
-					info.ID[idInput].start = hourInput % 12;
+					info.ID[idInput].end = hourInput % 12;
+					//printf("set end hour to %d a.m [%d]", hourInput, info.ID[idInput].end);
 					break;
 				case 'p':case 'P':
-					info.ID[idInput].start = hourInput % 12 + 12;
+					info.ID[idInput].end = hourInput % 12 + 12;
+					//printf("set end hour to %d a.m [%d]", hourInput, info.ID[idInput].end);
+					break;
 				default:
 					fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
 					goto FailedEndHour;
@@ -172,17 +177,17 @@ void insert_office_hour(char* tName) {
 		}
 	}
 }
-void update_office_hour(char* tName,int* id) {
+void update_office_hour(char* tName, int* id) {
 	if (id != NULL) {
-		char inputInfo[10]="";
+		char inputInfo[10] = "";
 		int hourInput = -1;
-		printf("\tOffice hour ID: %d\n\tEnter 1 to update day, 2 to update start, 3 to update end: ",*id);
-		_123:
+		printf("\tOffice hour ID: %d\n\tEnter 1 to update day, 2 to update start, 3 to update end: ", *id);
+	_123:
 		read_line(inputInfo, 1);
 		switch (inputInfo[0])
 		{
 		case '1': {
-			FailedDay1:
+		FailedDay1:
 			printf("\t\tEnter new day: ");
 			read_line(inputInfo, 10);
 			switch (inputInfo[0])
@@ -254,7 +259,7 @@ void update_office_hour(char* tName,int* id) {
 		case '2': {
 		FailedStartHour:
 			printf("Enter starting hour: ");
-			(void)scanf("%d", &hourInput);
+			scanf("%d", &hourInput);
 			read_line(inputInfo, 4);
 			if (!(0 <= hourInput && hourInput <= 12)) {
 				fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
@@ -272,11 +277,12 @@ void update_office_hour(char* tName,int* id) {
 				goto FailedStartHour;
 				break;
 			}
+			break;
 		}
 		case '3': {
 		FailedEndHour:
 			printf("Enter ending hour: ");
-			(void)scanf("%d", &hourInput);
+			scanf("%d", &hourInput);
 			read_line(inputInfo, 4);
 			if (!(0 <= hourInput && hourInput <= 12)) {
 				fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
@@ -285,15 +291,16 @@ void update_office_hour(char* tName,int* id) {
 			switch (inputInfo[0])
 			{
 			case 'a':case 'A':
-				info.ID[*id].start = hourInput % 12;
+				info.ID[*id].end = hourInput % 12;
 				break;
 			case 'p':case 'P':
-				info.ID[*id].start = hourInput % 12 + 12;
+				info.ID[*id].end = hourInput % 12 + 12;
 			default:
 				fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
 				goto FailedEndHour;
 				break;
 			}
+			break;
 		}
 		default:
 			fprintf(stderr, "Update Operation Select Failed\nPlease select from the table below\n[1]-Update Day\n[2]-Update Starting Hour\n[3]-Update Ending Hour");
@@ -302,144 +309,157 @@ void update_office_hour(char* tName,int* id) {
 		}
 	}
 	else {
-		int id2 = -1;
-		printf("Enter identification number: ");
-		(void)scanf("%d", &id2);
-		if (id2 > maxOffice || id2 < 0) {
-			fprintf("Entered ID:%d must be in legal range [%d-%d]", id2, 0, maxOffice);
-		}
-		else if (id2 < maxOffice && id2 >= 0) {
-			char inputInfo[10] = "";
-			int hourInput = -1;
-			printf("\tOffice hour ID: %d\n\tEnter 1 to update day, 2 to update start, 3 to update end: ", id2);
-		_123_2:
-			read_line(inputInfo, 1);
-			switch (inputInfo[0])
-			{
-			case '1': {
-			FailedDay:
-				printf("\t\tEnter new day: ");
-				read_line(inputInfo, 10);
+		char filename[name + 4] = "";
+		strcpy(filename, tName);
+		strcat(filename, ".dat");
+		if (NULL == (file = fopen(filename, "rb+")))
+			fprintf(stderr, "An Error Occured While Opening File \"%s\"\nFunciton:Print Office Hour %s", filename, __FILE__);
+		else {
+			fread(&info, sizeof(info), 1, file);
+			int id2 = -1;
+			printf("Enter identification number: ");
+			scanf("%d", &id2);
+			if (id2 > maxOffice || id2 < 0)
+				fprintf("Entered ID:%d must be in legal range [%d-%d]", id2, 0, maxOffice);
+			else if (info.ID[id2].status == DNE)
+				fprintf("Entered ID:%d does not exist", id2);
+			else if (id2 < maxOffice && id2 >= 0) {
+				char inputInfo[10] = "";
+				int hourInput = -1;
+				printf("\tOffice hour ID: %d\n\tEnter 1 to update day, 2 to update start, 3 to update end: ", id2);
+			_123_2:
+				read_line(inputInfo, 1);
 				switch (inputInfo[0])
 				{
-				case 'M':case 'm':
-					info.ID[id2].day = Monday;
-					break;
-				case 't':case 'T':
-					if (inputInfo[1] == 'h' || inputInfo[1] == 'H')
-						info.ID[id2].day = Thursday;
-					else if (inputInfo[1] == 'u' || inputInfo[1] == 'U')
-						info.ID[id2].day = Tuesday;
-					else {
+				case '1': {
+				FailedDay:
+					printf("\t\tEnter new day: ");
+					read_line(inputInfo, 10);
+					switch (inputInfo[0])
+					{
+					case 'M':case 'm':
+						info.ID[id2].day = Monday;
+						break;
+					case 't':case 'T':
+						if (inputInfo[1] == 'h' || inputInfo[1] == 'H')
+							info.ID[id2].day = Thursday;
+						else if (inputInfo[1] == 'u' || inputInfo[1] == 'U')
+							info.ID[id2].day = Tuesday;
+						else {
+							fprintf(stderr, "Day Selection failed \n\a(Please refine your input)");
+							goto FailedDay;
+						}
+						break;
+					case 'w':case 'W':
+						info.ID[id2].day = Wednesday;
+						break;
+					case 'F':case 'f':
+						info.ID[id2].day = Friday;
+						break;
+					case 'S':case 's':
+						if (inputInfo[1] == 'a' || inputInfo[1] == 'A')
+							info.ID[id2].day = Saturday;
+						else if (inputInfo[1] == 'u' || inputInfo[1] == 'U')
+							info.ID[id2].day = Sunday;
+						else {
+							fprintf(stderr, "Day Selection failed \n\a(Please refine your input)");
+							goto FailedDay;
+						}
+						break;
+					default:
 						fprintf(stderr, "Day Selection failed \n\a(Please refine your input)");
 						goto FailedDay;
+						break;
+					}
+					printf("\t\tNew day is : ");
+					switch (info.ID[id2].day)
+					{
+					case Monday:
+						printf("Monday");
+						break;
+					case Tuesday:
+						printf("Tuesday");
+						break;
+					case Wednesday:
+						printf("Wednesday");
+						break;
+					case Thursday:
+						printf("Thursday");
+						break;
+					case Friday:
+						printf("Friday");
+						break;
+					case Saturday:
+						printf("Saturday");
+						break;
+					case Sunday:
+						printf("Sunday");
+						break;
+					default:
+						fprintf(stderr, "An Error Occured in Date Printing" __FILE__);
+						break;
 					}
 					break;
-				case 'w':case 'W':
-					info.ID[id2].day = Wednesday;
-					break;
-				case 'F':case 'f':
-					info.ID[id2].day = Friday;
-					break;
-				case 'S':case 's':
-					if (inputInfo[1] == 'a' || inputInfo[1] == 'A')
-						info.ID[id2].day = Saturday;
-					else if (inputInfo[1] == 'u' || inputInfo[1] == 'U')
-						info.ID[id2].day = Sunday;
-					else {
-						fprintf(stderr, "Day Selection failed \n\a(Please refine your input)");
-						goto FailedDay;
+				}
+				case '2': {
+				FailedStartHour1:
+					printf("Enter starting hour: ");
+					scanf("%d", &hourInput);
+					read_line(inputInfo, 4);
+					if (!(0 <= hourInput && hourInput <= 12)) {
+						fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
+						goto FailedStartHour1;
+					}
+					switch (inputInfo[0])
+					{
+					case 'a':case 'A':
+						info.ID[id2].start = hourInput % 12;
+						break;
+					case 'p':case 'P':
+						info.ID[id2].start = hourInput % 12 + 12;
+						break;
+					default:
+						fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
+						goto FailedStartHour1;
+						break;
 					}
 					break;
-				default:
-					fprintf(stderr, "Day Selection failed \n\a(Please refine your input)");
-					goto FailedDay;
+				}
+				case '3': {
+				FailedEndHour1:
+					printf("Enter ending hour: ");
+					scanf("%d", &hourInput);
+					read_line(inputInfo, 4);
+					if (!(0 <= hourInput && hourInput <= 12)) {
+						fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
+						goto FailedEndHour1;
+					}
+					switch (inputInfo[0])
+					{
+					case 'a':case 'A':
+						info.ID[id2].end = hourInput % 12;
+						break;
+					case 'p':case 'P':
+						info.ID[id2].end = hourInput % 12 + 12;
+						break;
+					default:
+						fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
+						goto FailedEndHour1;
+						break;
+					}
 					break;
 				}
-				printf("\t\tNew day is : ");
-				switch (info.ID[id2].day)
-				{
-				case Monday:
-					printf("Monday");
-					break;
-				case Tuesday:
-					printf("Tuesday");
-					break;
-				case Wednesday:
-					printf("Wednesday");
-					break;
-				case Thursday:
-					printf("Thursday");
-					break;
-				case Friday:
-					printf("Friday");
-					break;
-				case Saturday:
-					printf("Saturday");
-					break;
-				case Sunday:
-					printf("Sunday");
-					break;
 				default:
-					fprintf(stderr, "An Error Occured in Date Printing" __FILE__);
-					break;
-				}
-				break;
-			}
-			case '2': {
-			FailedStartHour1:
-				printf("Enter starting hour: ");
-				(void)scanf("%d", &hourInput);
-				read_line(inputInfo, 4);
-				if (!(0 <= hourInput && hourInput <= 12)) {
-					fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
-					goto FailedStartHour1;
-				}
-				switch (inputInfo[0])
-				{
-				case 'a':case 'A':
-					info.ID[id2].start = hourInput % 12;
-					break;
-				case 'p':case 'P':
-					info.ID[id2].start = hourInput % 12 + 12;
-				default:
-					fprintf(stderr, "Starting Hour Selection failed \n\a(Please refine your input)");
-					goto FailedStartHour1;
+					fprintf(stderr, "Update Operation Select Failed\nPlease select from the table below\n[1]-Update Day\n[2]-Update Starting Hour\n[3]-Update Ending Hour");
+					goto _123_2;
 					break;
 				}
 			}
-			case '3': {
-			FailedEndHour1:
-				printf("Enter ending hour: ");
-				(void)scanf("%d", &hourInput);
-				read_line(inputInfo, 4);
-				if (!(0 <= hourInput && hourInput <= 12)) {
-					fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
-					goto FailedEndHour1;
-				}
-				switch (inputInfo[0])
-				{
-				case 'a':case 'A':
-					info.ID[id2].start = hourInput % 12;
-					break;
-				case 'p':case 'P':
-					info.ID[id2].start = hourInput % 12 + 12;
-				default:
-					fprintf(stderr, "Ending Hour Selection failed \n\a(Please refine your input)");
-					goto FailedEndHour1;
-					break;
-				}
-			}
-			default:
-				fprintf(stderr, "Update Operation Select Failed\nPlease select from the table below\n[1]-Update Day\n[2]-Update Starting Hour\n[3]-Update Ending Hour");
-				goto _123_2;
-				break;
-			}
+			store_office_hour();
 		}
 	}
 }
 void print_office_hour(char *tName) {
-	FILE *file;
 	char filename[name+4]="";
 	strcpy(filename, tName);
 	strcat(filename,".dat");

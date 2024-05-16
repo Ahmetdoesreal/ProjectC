@@ -40,37 +40,66 @@ struct TeacherInfo
 		char takenby[name];
 	}ID[maxOffice];
 };
+FILE* testf;
+
 int main(void) {
 	char Selection = 0;
 	char input[name]="";
 	ProjectInfo;
 	printf("**************************************************\n* WELCOME TO THE OFFICE HOUR APPOINTMENT SYSTEM  *\n**************************************************\nWho are you? (Enter 1 for TEACHER, 2 for STUDENT):");
 	read_line(&Selection, 1);
-	if (Selection=='1') {
+	if (Selection == '1') {
 		printf("Enter your full name:");
-		read_line(input,name);
-		printf("welcome %s", input);
-		do{
-			printf("\nselect operation Insert,Update,Print,Quit");
+		read_line(input, name);
+		char test[name + 4];
+		strcpy(test, input);
+		strcat(test, ".dat");
+		if ((testf = fopen(test, "rb")) == NULL) {
+			printf("Could not find information file for Teacher %s as file \"%s\"\nWould You like to create file \"%s\"", input, test, test);
 			read_line(&Selection, 1);
-			switch (Selection)
+			if (Selection == 'Y' || Selection == 'y')
 			{
-			case 'i':case 'I':
-				insert_office_hour(input);
-				break;
-			case 'u':case 'U':
-				update_office_hour(input,NULL);
-				break;
-			case 'p':case'P':
-				print_office_hour(input);
-				break;
-			case 'q':case 'Q':case'\n':
-				break;
-			default:
-				fprintf(stderr, "\a\nPlease select a supported action\n[i,I]\tInsert\n[u,U]\tUpdate\n[p,P]\tPrint\n[q,Q]\tQuit");
-				break;
+				if ((testf = fopen(test, "wb+") == NULL)) {
+					fprintf(stderr, "File Creation failed");
+					return -1;
+				}
+				else {
+					struct TeacherInfo newteach;
+					strcpy(newteach.Name, input);
+					rewind(testf);
+					fwrite(&newteach, sizeof(newteach), 1, testf);
+					fclose(testf);
+				}
 			}
-		} while (Selection != 'q' && Selection != 'Q');
+			else
+			{
+				return 0;
+			}
+		}
+		else {
+			printf("welcome %s", input);
+			do {
+				printf("\nselect operation Insert,Update,Print,Quit");
+				read_line(&Selection, 1);
+				switch (Selection)
+				{
+				case 'i':case 'I':
+					insert_office_hour(input);
+					break;
+				case 'u':case 'U':
+					update_office_hour(input, NULL);
+					break;
+				case 'p':case'P':
+					print_office_hour(input);
+					break;
+				case 'q':case 'Q':case'\n':
+					break;
+				default:
+					fprintf(stderr, "\a\nPlease select a supported action\n[i,I]\tInsert\n[u,U]\tUpdate\n[p,P]\tPrint\n[q,Q]\tQuit");
+					break;
+				}
+			} while (Selection != 'q' && Selection != 'Q');
+		}
 	}
 	else if (Selection == '2') {
 		printf("Enter your full name:");
@@ -88,50 +117,4 @@ int main(void) {
 	else {
 		fprintf(stderr, "Please enter 1 or 2\a");
 	}
-}/*
-int main(void) {
-	struct TeacherInfo x;
-	x.ID[2].status=NotTaken;
-	x.ID[3].status=Taken;
-	x.ID[4].status=NotTaken;
-	strcpy(x.Name,"Deniz Sezgin");
-	x.ID[0].status=NotTaken;
-	x.ID[0].day=Tuesday;
-	x.ID[0].start=13;
-	x.ID[0].end=14;
-	x.ID[1].status=Taken;
-	x.ID[1].day=Wednesday;
-	x.ID[1].start=20;
-	x.ID[1].end=22;
-	strcpy(x.ID[1].takenby,"Ahmet Deniz");
-	x.ID[2].day = Monday;
-	x.ID[2].start = 11;
-	x.ID[2].end = 12;
-	strcpy(x.ID[2].takenby, "Ahmet Sezgin");
-	x.ID[3].day = Sunday;
-	x.ID[3].start = 0;
-	x.ID[3].end = 23;
-	strcpy(x.ID[3].takenby, "student name");
-	x.ID[4].day = Saturday;
-	x.ID[4].start = 0;
-	x.ID[4].end = 12;
-	strcpy(x.ID[4].takenby, "amerikanvari patates salatasi");
-	FILE* fp,*fp2;
-	char filename[name + 3];
-	strcpy(filename, x.Name);
-	strcat(filename, ".dat");
-	if ((fp = fopen(filename, "wb+")) != NULL){
-		fwrite(&x, sizeof(x), 1, fp);
-		fclose(fp);
-	}
-	else
-		fprintf(stderr,"no");
-
-	struct TeacherInfo patates;
-	if ((fp2 = fopen(filename, "rb+")) != NULL)
-		fread(&patates, sizeof(x), 1, fp2);
-	else
-		fprintf(stderr,"sad");
-	printf("\n");
-	print_office_hour(x.Name);
-}*/
+}
