@@ -44,39 +44,39 @@ FILE* testf;
 
 int main(void) {
 	char Selection = 0;
-	char input[name]="";
-	ProjectInfo;
-	printf("**************************************************\n* WELCOME TO THE OFFICE HOUR APPOINTMENT SYSTEM  *\n**************************************************\nWho are you? (Enter 1 for TEACHER, 2 for STUDENT):");
-	read_line(&Selection, 1);
-	if (Selection == '1') {
-		printf("Enter your full name:");
-		read_line(input, name);
-		char test[name + 4];
-		strcpy(test, input);
-		strcat(test, ".dat");
-		if ((testf = fopen(test, "rb")) == NULL) {
-			printf("Could not find information file for Teacher %s as file \"%s\"\nWould You like to create file \"%s\"", input, test, test);
-			read_line(&Selection, 1);
-			if (Selection == 'Y' || Selection == 'y')
-			{
-				if ((testf = fopen(test, "wb+")) == NULL) {
-					fprintf(stderr, "File Creation failed");
-					return -1;
+
+	do {
+		char input[name] = "";
+		ProjectInfo;
+		printf("**************************************************\n* WELCOME TO THE OFFICE HOUR APPOINTMENT SYSTEM  *\n**************************************************\nWho are you? (Enter 1 for TEACHER, 2 for STUDENT):");
+		read_line(&Selection, 1);
+		if (Selection == '1') {
+			printf("Enter your full name:");
+			read_line(input, name);
+			char test[name + 4];
+			strcpy(test, input);
+			strcat(test, ".dat");
+			if ((testf = fopen(test, "rb")) == NULL) {
+				printf("Could not find information file for Teacher %s as file \"%s\"\nWould You like to create file \"%s\"", input, test, test);
+				read_line(&Selection, 1);
+				if (Selection == 'Y' || Selection == 'y') {
+					if ((testf = fopen(test, "wb+")) == NULL) {
+						fprintf(stderr, "File Creation failed");
+						return -1;
+					}
+					else {
+						struct TeacherInfo newteach;
+						strcpy(newteach.Name, input);
+						rewind(testf);
+						fwrite(&newteach, sizeof(newteach), 1, testf);
+						fclose(testf);
+					}
 				}
-				else {
-					struct TeacherInfo newteach;
-					strcpy(newteach.Name, input);
-					rewind(testf);
-					fwrite(&newteach, sizeof(newteach), 1, testf);
-					fclose(testf);
+				else
+				{
+					return 0;
 				}
 			}
-			else
-			{
-				return 0;
-			}
-		}
-		else {
 			printf("welcome %s", input);
 			do {
 				printf("\nselect operation Insert,Update,Print,Quit");
@@ -100,21 +100,22 @@ int main(void) {
 				}
 			} while (Selection != 'q' && Selection != 'Q');
 		}
-	}
-	else if (Selection == '2') {
-		printf("Enter your full name:");
-		read_line(input, name);
-		printf("welcome %s", input);
-		do{
-			char teach[name] = "";
-			printf("Enter Teacher name:");
-			read_line(teach, name);
-			Selection = teach[0];
-			if(teach[0]!='q'&&teach[0]!='Q')
-			create_appointment(input,teach);
-		} while (Selection != 'q' && Selection != 'Q');
-	}
-	else {
-		fprintf(stderr, "Please enter 1 or 2\a");
-	}
+		else if (Selection == '2') {
+			printf("Enter your full name:");
+			read_line(input, name);
+			printf("welcome %s", input);
+			do {
+				char teach[name] = "";
+				printf("Enter Teacher name:");
+				read_line(teach, name);
+				Selection = teach[0];
+				if (teach[0] != 'q' && teach[0] != 'Q')
+					create_appointment(input, teach);
+			} while (Selection != 'q' && Selection != 'Q');
+		}
+		else {
+			fprintf(stderr, "Please enter 1 or 2\a");
+		}
+	} while (Selection != '3');
+	return 0;
 }
