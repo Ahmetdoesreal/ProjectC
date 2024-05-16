@@ -12,7 +12,8 @@ The program tracks the appointment of office hours
 
 So we meet again,
 Start Project 15 May 02:25
-
+since its multifile i forgor this existed :P
+added file storing and updating for teacher data(16 May 22:38)
 
 */
 #define _CRT_SECURE_NO_WARNINGS
@@ -34,13 +35,12 @@ struct TeacherInfo
 	struct
 	{
 		int start, end;
-		enum { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }day;
+		enum { Monday=1, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }day;
 		enum{DNE,Taken,NotTaken}status;
 		char takenby[name];
 	}ID[maxOffice];
 };
 int main(void) {
-
 	char Selection = 0;
 	char input[name]="";
 	ProjectInfo;
@@ -56,10 +56,10 @@ int main(void) {
 			switch (Selection)
 			{
 			case 'i':case 'I':
-				insert_office_hour();
+				insert_office_hour(input);
 				break;
 			case 'u':case 'U':
-				update_office_hour();
+				update_office_hour(input,NULL);
 				break;
 			case 'p':case'P':
 				print_office_hour(input);
