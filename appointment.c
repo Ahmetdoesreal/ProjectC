@@ -59,7 +59,7 @@ int main(void) {
 			read_line(&Selection, 1);
 			if (Selection == 'Y' || Selection == 'y')
 			{
-				if ((testf = fopen(test, "wb+") == NULL)) {
+				if ((testf = fopen(test, "wb+")) == NULL) {
 					fprintf(stderr, "File Creation failed");
 					return -1;
 				}
