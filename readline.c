@@ -5,7 +5,6 @@ readline.c
 Ahmet Deniz Sezgin
 Line Reader
 
-Reading lines was never more harder.
 */
 #define _CRT_SECURE_NO_WARNINGS //makes it so Microsoft C Runtime Compiler doesnt complain about input functions
 #include <stdio.h>              //standard c input output library
