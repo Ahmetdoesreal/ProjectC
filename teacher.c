@@ -87,7 +87,7 @@ void insert_office_hour(char* tName) {//gets teacher name as parameter
     
 
     if (NULL == (file = fopen(filename, "rb+"))) {//checks if the file could be opened
-    	fprintf(stderr, "An Error Occured While Opening File \"%s\"\nFunciton:Insert Office Hour %s",filename, __LINE__);//if fails gives out info and error message
+    	fprintf(stderr, "An Error Occured While Opening File \"%s\"\nFunciton:Insert Office Hour %d",filename, __LINE__);//if fails gives out info and error message
     }
     else {//if succeedes
     	fread(&info, sizeof(info), 1, file);//reads teacher info
@@ -401,7 +401,7 @@ void update_office_hour(char* tName, int* id) {
         update_office_hour((char *)&tName, &id2);//calls the update hour function again with a proper pointer
         store_office_hour();//stores the updated hour
         }else//if file couldn't open
-        fprintf(stderr,"File open failed \"%s\" line:%s",filename,__LINE__);//prints out error
+        fprintf(stderr,"File open failed \"%s\" line:%d",filename,__LINE__);//prints out error
         }
     }
 }
