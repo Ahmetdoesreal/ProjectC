@@ -254,7 +254,7 @@ void update_office_hour(char* tName, int* id) {
                 fprintf(stderr,"Please Choose (Y/N) : ");//tells user to choose
                 break;
                 }
-            }while(!(inputInfo[0]=='n'&&inputInfo[0]=='N'&&inputInfo[0]=='y'&&inputInfo[0]=='Y'));
+            }while(inputInfo[0]=='n'||inputInfo[0]=='N'||inputInfo[0]=='y'||inputInfo[0]=='Y');
         }
         printf("\tOffice hour ID: %d\n\tEnter 1 to update day, 2 to update start, 3 to update end: ", *id);//gives info about selected id & prompts user
 	_123://couldnt find name so named it _123 1 for day 2 for start 3 for end, underscore is just to make syntax work
