@@ -129,7 +129,7 @@ int main(void) {//main function
     	    } while (Selection != 'q' && Selection != 'Q');// i could use the if(condition){statement}else break; to exit the loop but i used this at the previous loop
     	}
     	else if(Selection!='3') //if the first selection is not 1 or 2 or 3 
-    	    fprintf(stderr, "Please enter 1 or 2 or 3(Exit)\a");//prints out a much more  basic error message stating they have 3 options
+    	    fprintf(stderr, "Please enter 1 or 2 or 3(Exit)\a\n");//prints out a much more  basic error message stating they have 3 options
     } while (Selection != '3');//if the selection is not 3 continues the loop
     return 0;//return 0 successfull termination
 }
