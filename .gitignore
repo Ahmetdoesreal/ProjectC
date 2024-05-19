@@ -9,3 +9,5 @@ appointment
 *.db-shm
 .vs/Proje/v17/.suo
 /x64
+/Proje/x64
+*.json

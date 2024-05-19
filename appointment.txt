@@ -1,2 +1,2 @@
 Teacher		Student		Day		Start	End
-Deniz           Ahmet           Monday		1 a.m.	2 p.m.
+Deniz           Ahmet           Monday		7 p.m.	8 a.m.
