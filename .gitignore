@@ -10,3 +10,5 @@
 /x64
 /Proje/x64
 *.json
+/2300005633/extras
+extras/
