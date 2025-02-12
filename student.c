@@ -8,6 +8,7 @@ Student Functions and appointment file operations
 */
 #define _CRT_SECURE_NO_WARNINGS //makes it so Microsoft C Runtime Compiler doesnt complain about input functions
 #include <stdio.h>              //Standard C Input Output library
+#include <stdlib.h>             //Standard C Library for various functions
 #include <string.h>             //Standard String Operations library
 #include "student.h"            //Header file that contains Student Functions Prototypes
 #include "teacher.h"            //Header file that contains Teacher Functions Prototypes
@@ -131,7 +132,14 @@ void create_appointment(char* studentName, char* teacherName) {
 	        fclose(file);//closes file
 	    }
         }
-    else
-	fprintf(stderr,"Couldn't find Teacher %s Please refine your input.\n", teacherName);//shows error message that teacher is not found
+    else{
+            fprintf(stderr,"Couldn't find Teacher %s Please refine your input.\n\tAvalible Teacher files:\n", teacherName);//shows error message that teacher is not found
+            #ifdef _WIN32
+            system("dir /B *.dat");
+            #endif
+            #if (defined __APPLE__ || defined __UNIX__)
+            system("ls -1 *.dat");
+            #endif
+        }
     }
 }
