@@ -137,7 +137,7 @@ void create_appointment(char* studentName, char* teacherName) {
             #ifdef _WIN32
             system("dir /B *.dat");
             #endif
-            #if (defined __APPLE__ || defined __UNIX__)
+            #if (defined __APPLE__ || defined __unix__)
             system("ls -1 *.dat");
             #endif
         }
